@@ -1,0 +1,141 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
+
+/**** Mobile layout ****/
+@media (max-width: 900px) {
+  .appbar-nav {
+    display: none
+  }
+}
+
+.fa.fa-search:hover, .appbar-nav:hover {
+  color: rgb(0, 188, 212) !important
+}
+
+html, body, body > * {
+  height: 100%;
+}
+
+
+/* Main container for holding grids */
+
+
+/* Section grid */
+section {
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 1044px;
+  margin: 30px auto 30px auto;
+}
+
+section > * {
+  flex: 1 1 auto;
+  margin: 20px;
+}
+
+h1 {
+  font-weight: normal;
+  font-size: 2em;
+  margin-bottom: 0;
+}
+
+h3 {
+  margin: 20px;
+  font-weight: normal
+}
+
+footer > a {
+  padding: 0 15px
+}
+
+.fa.fa-shopping-cart {
+  font-size: 20px !important;
+}
+
+
+
+
+
+
+
+
+/* Image Transistions */
+.image-appear {
+  opacity: 0;
+}
+
+.image-appear.image-appear-active {
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+a {
+  color: rgb(0, 188, 212);
+}
+
+.section {
+  margin: 80px 0;
+  max-width: 1044px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-forms {
+  padding: 80px 0;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a img{
+  border: 0px;
+}
+
+::-moz-selection {
+  background-color: rgb(0, 188, 212);
+  color: #fff;
+}
+
+::selection {
+  background-color: rgb(0, 188, 212);
+  color: #fff;
+}
+
+
+
+
+.slick-dots {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.slick-slider {
+  margin: 80px 0 160px 0;
+  max-width: 1044px;
+  margin-left: auto;
+  margin-right: auto;
+}
