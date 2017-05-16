@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import AdminThemeAdd from '../components/AdminThemeAdd'
 import AdminTheme from '../components/AdminTheme'
 import AdminFavicon from '../components/AdminFavicon'
 
