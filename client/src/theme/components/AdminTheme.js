@@ -102,7 +102,7 @@ AdminTheme = reduxForm({
 })(AdminTheme)
 
 const mapStateToProps = (state) => {
-  if (state.theme) {
+  if (state.theme.values) {
     return {
       isFetching: state.theme.isFetching,
       initialValues: {
