@@ -1,6 +1,6 @@
 const user = (state = {
   roles: [],
-  values: [],
+  values: {},
   error: {}
 }, action) => {
   switch(action.type) {
@@ -36,7 +36,7 @@ const user = (state = {
       case 'RESET_USER':
         return {
           ...state,
-          ...action.recovery
+          ...action.user
         }
     case 'CONTACT_USER':
       return {

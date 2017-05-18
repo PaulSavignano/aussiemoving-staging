@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { push, goBack } from 'react-router-redux'
 import { Link } from 'react-router'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -38,7 +37,7 @@ class Signin extends Component {
   state = { open: false }
   handleClose = () => this.setState({open: false})
   componentWillReceiveProps(nextProps) {
-    this.props.submitSucceeded === nextProps.submitSucceeded ? null : nextProps.submitSucceeded ? this.setState({ open: true }) : null
+    if (nextProps.submitSucceeded) return this.setState({ open: true })
   }
   render() {
     console.log(this.props)
@@ -52,7 +51,7 @@ class Signin extends Component {
               <CardText>
                 <Field name="email" component={renderTextField} label="Email" fullWidth={true} />
                 <Field name="password" component={renderTextField} label="Password" fullWidth={true} type="password" />
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <strong>{error}</strong>}
               </CardText>
               <CardActions>
                 <RaisedButton
@@ -82,7 +81,7 @@ class Signin extends Component {
             }
             <CardActions style={{ display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between' }}>
               <p>Don't have an account? <Link to="/signup">Sign up instead!</Link></p>
-              <p><Link to="/recover">Forgot your password?</Link></p>
+              <p><Link to="/recovery">Forgot your password?</Link></p>
             </CardActions>
           </Card>
         </section>

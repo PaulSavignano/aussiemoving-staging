@@ -39,10 +39,10 @@ class Signup extends Component {
   state = { open: false }
   handleClose = () => this.setState({open: false})
   componentWillReceiveProps(nextProps) {
-    this.props.submitSucceeded === nextProps.submitSucceeded ? null : nextProps.submitSucceeded ? this.setState({ open: true }) : null
+    if (nextProps.submitSucceeded) return this.setState({ open: true })
   }
   render() {
-    const { dispatch, submitSucceeded, handleSubmit, submitting, user } = this.props
+    const { dispatch, error, handleSubmit, submitting, user } = this.props
     return (
       <main>
         <section>
@@ -55,6 +55,7 @@ class Signup extends Component {
                 <Field name="email" component={renderTextField} label="Email" fullWidth={true} />
                 <Field name="password" component={renderTextField} label="Password" fullWidth={true} type="password" />
                 <Field name="passwordConfirm" component={renderTextField} label="Password Confirm" fullWidth={true} type="password"/>
+                {error && <strong>{error}</strong>}
               </CardText>
               {!this.state.open ? null :
                 <Dialog
@@ -72,7 +73,6 @@ class Signup extends Component {
                   Welcome {user.values ? user.values.firstname : null}
                 </Dialog>
               }
-              {user.error.length ? <CardText><p>{user.error}</p></CardText> : ''}
               <CardActions>
                 <RaisedButton
                   label="Sign Up"

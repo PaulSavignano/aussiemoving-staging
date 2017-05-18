@@ -7,12 +7,11 @@ import FontIcon from 'material-ui/FontIcon'
 import TextField from 'material-ui/TextField'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
-import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 import { searchText } from '../actions/search'
 import SigninSignout from '../../users/components/SigninSignout'
-import CartIcon from '../../products/components/CartIcon'
+import CartIcon from '../../carts/components/CartIcon'
 
 import NavLink from './NavLink'
 
@@ -65,7 +64,7 @@ class AppBarNav extends Component {
     this.setState({ openMenu: false })
   }
   render() {
-    const { dispatch, user, image, handleDrawer, handleSearch, searching } = this.props
+    const { dispatch, user, image, handleDrawer } = this.props
     return (
       <AppBar
         onLeftIconButtonTouchTap={handleDrawer}
@@ -73,7 +72,7 @@ class AppBarNav extends Component {
           this.state.searching ?
             <nav style={styles.AppBarSearch}>
               <div style={{ cursor: 'pointer', margin: '0 15px 0 0' }} onTouchTap={() => dispatch(push('/'))}>
-                {image ? <img src={image} alt="" style={styles.favicon}/> : 'Brand'}
+                {image ? null : 'Brand'}
               </div>
               <span style={styles.rightSearch}>
                 <FontIcon className="fa fa-search" style={styles.search} onTouchTap={() => this.setState({ searching: !this.state.searching }) }/>
@@ -107,6 +106,7 @@ class AppBarNav extends Component {
                   <IconButton style={{ padding: '20px 12px 4px 12px'}}><MoreVertIcon /></IconButton>
                 }
                 open={this.state.openMenu}
+                onTouchTap={() => this.setState({ openMenu: !this.state.openMenu })}
                 onRequestChange={(value) => this.setState({ openMenu: value })}
                 style={{ verticalAlign: 'middle' }}
                 targetOrigin={{horizontal: 'right', vertical: 'top'}}

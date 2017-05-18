@@ -6,7 +6,7 @@ import { Card, CardMedia, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import ImageForm from '../../images/components/ImageForm'
-import { fetchAdd } from '../actions/product'
+import { fetchAdd } from '../actions/index'
 
 const validate = values => {
   const errors = {}
@@ -43,8 +43,8 @@ class AdminProductAdd extends Component {
     this.props.submitSucceeded ? this.setState({ submitted: true }) : this.setState({ submitted: false })
   }
   componentWillReceiveProps(nextProps) {
-    nextProps.submitSucceeded ? this.setState({ submitted: true }) : null
-    nextProps.dirty ? this.setState({ submitted: false }) : null
+    if (nextProps.submitSucceeded) return this.setState({ submitted: true })
+    if (nextProps.dirty) return this.setState({ submitted: false })
   }
   handleMouseEnter = () => this.setState({ zDepth: 4 })
   handleMouseLeave = () => this.setState({ zDepth: 1 })
@@ -55,7 +55,7 @@ class AdminProductAdd extends Component {
     if (editor) this.editor = editor
   }
   render() {
-    const { handleSubmit, _id, dispatch } = this.props
+    const { error, handleSubmit, _id, dispatch } = this.props
     return (
       <Card
         zDepth={this.state.zDepth}
@@ -65,7 +65,7 @@ class AdminProductAdd extends Component {
         <CSSTransitionGroup
           transitionName="image"
           transitionAppear={true}
-          transitionAppearTimeout={600}
+          transitionAppearTimeout={900}
           transitionEnter={false}
           transitionLeave={false}
         >
@@ -121,11 +121,11 @@ class AdminProductAdd extends Component {
                 fullWidth={true}
                 component={renderTextField}
               />
+              {error && <strong>{error}</strong>}
             </CardText>
             <div style={{ display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between' }}>
               <RaisedButton
                 type="submit"
-                label="Add"
                 label={this.state.submitted ? "Added" : "Add"}
                 labelColor="#ffffff"
                 primary={this.state.submitted ? false : true}

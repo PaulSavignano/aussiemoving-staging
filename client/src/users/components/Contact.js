@@ -39,10 +39,10 @@ class Contact extends Component {
   }
   handleClose = () => this.setState({open: false})
   componentWillReceiveProps(nextProps) {
-    nextProps.submitSucceeded ? this.setState({ open: true }) : null
+    if (nextProps.submitSucceeded) return this.setState({ open: true })
   }
   render() {
-    const { dispatch, handleSubmit, submitting, user } = this.props
+    const { dispatch, error, handleSubmit, submitting } = this.props
     return (
       <main>
         <section>
@@ -70,7 +70,7 @@ class Contact extends Component {
                   Email was successfully sent!
                 </Dialog>
               }
-              {user.error.length ? <CardText><p>{user.error}</p></CardText> : ''}
+              {error && <strong>{error}</strong>}
               <CardActions>
                 <RaisedButton
                   label="Contact"
@@ -95,7 +95,8 @@ Contact = reduxForm({
 })(Contact)
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
+  initialValues: state.user.values
 })
 
 Contact = connect(mapStateToProps)(Contact)
