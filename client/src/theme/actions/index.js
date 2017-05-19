@@ -62,6 +62,7 @@ export const fetchTheme = () => {
         dispatch(fetchThemeSuccess(json[0]))
       })
       .catch(err => {
+        console.log(err)
         dispatch(fetchThemeFailure(err))
       })
   }

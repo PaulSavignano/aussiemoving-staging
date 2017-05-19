@@ -5,9 +5,10 @@ import { Link } from 'react-router'
 
 
 const NavLink = ({ children, to, path, linkColor }) => {
+  const color = linkColor ? linkColor : null
   const styles = {
     active: {
-      color: linkColor,
+      color,
     },
     inActive: {
       color: 'black',
@@ -30,7 +31,7 @@ const NavLink = ({ children, to, path, linkColor }) => {
 const mapStateToProps = (state) => {
   return {
     path: state.routing.locationBeforeTransitions.pathname,
-    linkColor: state.theme.values.palette.primary1Color
+    linkColor: state.theme.values ? state.theme.values.palette.primary1Color : null
   }
 }
 

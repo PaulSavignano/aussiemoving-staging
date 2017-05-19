@@ -68,6 +68,7 @@ class AdminTheme extends Component {
             />
 
             <CardText>
+              <Field name="appBarFontFamily" label="appBarFontFamily" type="text" fullWidth={true} component={renderTextField} />
               <Field name="appBarColor" label="appBarColor" type="text" fullWidth={true} component={renderTextField} />
               <Field name="appBarTextColor" label="appBarTextColor" type="text" fullWidth={true} component={renderTextField} />
               <Field name="fontFamily" label="fontFamily" type="text" fullWidth={true} component={renderTextField} />
@@ -85,10 +86,17 @@ class AdminTheme extends Component {
               <Field name="pickerHeaderColor" label="pickerHeaderColor" type="text" fullWidth={true} component={renderTextField} />
               <Field name="clockCircleColor" label="clockCircleColor" type="text" fullWidth={true} component={renderTextField} />
               <Field name="shadowColor" label="shadowColor" type="text" fullWidth={true} component={renderTextField} />
-              {error && <strong>{error}</strong>}
+              {error && <strong style={{ color: 'rgb(244, 67, 54)' }}>{error}</strong>}
             </CardText>
             <CardActions style={{ display: 'flex' }}>
-              <RaisedButton type="submit" label="Update" primary={true} style={{ flex: '1 1 auto', margin: 8 }}/>
+              <RaisedButton
+                type="submit"
+                label={this.state.submitted ? "Updated" : "Update"}
+                labelColor="#ffffff"
+                primary={this.state.submitted ? false : true}
+                backgroundColor={this.state.submitted ? "#4CAF50" : null }
+                style={{ flex: '1 1 auto', margin: 8 }}
+              />
             </CardActions>
           </Card>
         </form>
@@ -106,6 +114,7 @@ const mapStateToProps = (state) => {
     return {
       isFetching: state.theme.isFetching,
       initialValues: {
+        appBarFontFamily: state.theme.values.appBar.fontFamily,
         appBarColor: state.theme.values.appBar.color,
         appBarTextColor: state.theme.values.appBar.textColor,
         fontFamily: state.theme.values.fontFamily,

@@ -42,7 +42,8 @@ class Signup extends Component {
     if (nextProps.submitSucceeded) return this.setState({ open: true })
   }
   render() {
-    const { dispatch, error, handleSubmit, submitting, user } = this.props
+    const { dispatch, error, values, handleSubmit, submitting, user } = this.props
+    console.log(this.props)
     return (
       <main>
         <section>
@@ -55,7 +56,7 @@ class Signup extends Component {
                 <Field name="email" component={renderTextField} label="Email" fullWidth={true} />
                 <Field name="password" component={renderTextField} label="Password" fullWidth={true} type="password" />
                 <Field name="passwordConfirm" component={renderTextField} label="Password Confirm" fullWidth={true} type="password"/>
-                {error && <strong>{error}</strong>}
+                {error && <strong style={{ color: 'rgb(244, 67, 54)' }}>{error}</strong>}
               </CardText>
               {!this.state.open ? null :
                 <Dialog
@@ -70,7 +71,7 @@ class Signup extends Component {
                   open={this.state.open}
                   onRequestClose={this.handleClose}
                 >
-                  Welcome {user.values ? user.values.firstname : null}
+                  Welcome {values.firstname}!
                 </Dialog>
               }
               <CardActions>
@@ -97,7 +98,8 @@ Signup = reduxForm({
 })(Signup)
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
+  firstname: state.form.signup.values.firstname
 })
 
 Signup = connect(mapStateToProps)(Signup)

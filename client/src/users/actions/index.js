@@ -54,9 +54,8 @@ export const fetchSignin = (values) => {
       .then(res => {
         if (res.ok) {
           localStorage.setItem('token', res.headers.get('x-auth'))
-          return res.json()
         }
-        throw new Error('Network response was not ok.')
+        return res.json()
       })
       .then(json => {
         if (json.error) return Promise.reject(json.error)

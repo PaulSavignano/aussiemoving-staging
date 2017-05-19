@@ -119,9 +119,7 @@ UserSchema.statics.findByCredentials = function(email, password) {
   return User.findOne({ 'values.email': email })
     .then(user => {
       if (!user) {
-        return Promise.reject({
-          error: { email: 'User not found'}
-        })
+        return Promise.reject({ error: { email: 'User not found' }})
       }
       return bcrypt.compare(password, user.password)
         .then(res => {

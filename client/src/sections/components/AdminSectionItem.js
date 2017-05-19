@@ -50,7 +50,7 @@ class AdminSectionItem extends Component {
         onMouseLeave={this.handleMouseLeave}
         zDepth={3}
         containerStyle={{ display: 'flex', flexFlow: 'column', height: '100%' }}
-        style={{ height: '100%', margin: '60px 0'}}
+        style={{ height: '100%', margin: '100px 0'}}
       >
         <form
           onSubmit={handleSubmit((values) => {
@@ -161,7 +161,7 @@ class AdminSectionItem extends Component {
               fullWidth={true}
               component={renderTextField}
             />
-            {error && <strong>{error}</strong>}
+            {error && <strong style={{ color: 'rgb(244, 67, 54)' }}>{error}</strong>}
           </CardText>
           <CardActions style={{ display: 'flex' }}>
             <RaisedButton

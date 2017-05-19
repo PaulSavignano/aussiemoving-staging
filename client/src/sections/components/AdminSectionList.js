@@ -3,7 +3,7 @@ import React from 'react'
 import AdminSectionItem from '../components/AdminSectionItem'
 
 const AdminSectionList = ({ page, items }) => (
-  items.length < 1 ? <div><h3>No items yet</h3></div> :
+  items.length < 1 ? null :
   <div>
     {items.map(item => (
       <AdminSectionItem
