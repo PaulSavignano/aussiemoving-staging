@@ -1,38 +1,50 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import { Link } from 'react-router'
 
 
 
-const NavLink = ({ children, to, path, linkColor }) => {
-  const color = linkColor ? linkColor : null
-  const styles = {
-    active: {
-      color,
-    },
-    inActive: {
-      color: 'black',
-    },
-    both: {
-      fontSize: 14,
-      fontWeight: 400,
-      padding: '10px 15px',
-      textTransform: 'uppercase',
-      textDecoration: 'none'
+class NavLink extends Component {
+  state = {
+    color: this.props.theme.values.palette.textColor,
+  }
+  handleMouseEnter = () => this.setState({ color: this.props.theme.values.palette.primary1Color })
+  handleMouseLeave = () => this.setState({ color: this.props.theme.values.palette.textColor })
+  render() {
+    const { dispatch, children, to, path, theme } = this.props
+    const styles = {
+      active: {
+        color: theme.values.palette.primary1Color,
+      },
+      inActive: {
+        color: this.state.color
+      },
+      both: {
+        fontSize: 14,
+        fontWeight: 400,
+        padding: '10px 15px',
+        textTransform: 'uppercase',
+        textDecoration: 'none',
+        cursor: 'pointer'
+      }
     }
+    const props = { children, to }
+    const style = to === path ? styles.active : styles.inActive
+    return (
+      <span
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+        onTouchTap={() => {
+          console.log('hello')
+          dispatch(push(to))
+        }}
+        {...props}
+        style={Object.assign({}, style, styles.both)}
+      />
+    )
   }
-  const props = { children, to }
-  const style = to === path ? styles.active : styles.inActive
-  return (
-    <Link {...props} style={Object.assign({}, style, styles.both)} className="appbar-nav"/>
-  )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    path: state.routing.locationBeforeTransitions.pathname,
-    linkColor: state.theme.values ? state.theme.values.palette.primary1Color : null
-  }
-}
 
-export default connect(mapStateToProps)(NavLink)
+export default connect()(NavLink)

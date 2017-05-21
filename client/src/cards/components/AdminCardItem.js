@@ -29,13 +29,14 @@ class AdminCardItem extends Component {
   componentWillMount() {
     const { image } = this.props.item || null
     const hasImage = image ? true : false
-    const imageUrl = image ? image : 'https://placehold.it/1000x1000'
+    const imageUrl = image ? image : this.props.placeholdit
     this.setState({ expanded: hasImage, image: imageUrl })
     this.props.submitSucceeded ? this.setState({ submitted: true }) : this.setState({ submitted: false })
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.submitSucceeded) return this.setState({ submitted: true, image: nextProps.item.image })
-    if (nextProps.dirty) return this.setState({ submitted: false })
+    const { submitSucceeded, dirty, item } = nextProps
+    if (submitSucceeded) this.setState({ submitted: true, image: item.image })
+    if (dirty) this.setState({ submitted: false })
   }
   editing = (bool) => {
     bool ? this.setState({ submitted: false, editing: true }) : this.setState({ submitted: true, editing: true })
@@ -44,7 +45,8 @@ class AdminCardItem extends Component {
   handleMouseLeave = () => this.setState({ zDepth: 1 })
   setEditorRef = (editor) => this.editor = editor
   render() {
-    const { error, handleSubmit, dispatch, item } = this.props
+    const { error, handleSubmit, dispatch, item, imageSize } = this.props
+    const width = !item.values ? null : item.values.width ? item.values.width : null
     return (
       <form
         onSubmit={handleSubmit((values) => {
@@ -69,7 +71,7 @@ class AdminCardItem extends Component {
           dispatch(fetchUpdate(item._id, update))
           this.setState({ image: item.image })
         })}
-        style={{ flex: '1 1 auto', width: item.values.width, margin: 20 }}
+        style={{ flex: '1 1 auto', width, margin: 20 }}
       >
         <Card
           expanded={this.state.expanded}
@@ -82,8 +84,29 @@ class AdminCardItem extends Component {
           <CardText>
             <Field
               name="width"
-              label="Width"
-              type="number"
+              label="Width px"
+              type="text"
+              fullWidth={true}
+              component={renderTextField}
+            />
+            <Field
+              name="maxWidth"
+              label="Max Width px"
+              type="text"
+              fullWidth={true}
+              component={renderTextField}
+            />
+            <Field
+              name="margin"
+              label="Margin"
+              type="text"
+              fullWidth={true}
+              component={renderTextField}
+            />
+            <Field
+              name="backgroundColor"
+              label="Background Color"
+              type="text"
               fullWidth={true}
               component={renderTextField}
             />
@@ -112,8 +135,8 @@ class AdminCardItem extends Component {
               image={this.state.image}
               type="image/jpeg"
               editing={this.editing}
-              width={1000}
-              height={1000}
+              width={imageSize.width}
+              height={imageSize.height}
               ref={this.setEditorRef}
             />
           </CardMedia>
@@ -125,9 +148,10 @@ class AdminCardItem extends Component {
               fullWidth={true}
               component={renderTextField}
             />
-            {item.values.iFrame ?
+            {!item.values ? null : item.values.iFrame ?
               <div style={{ position: 'relative', paddingBottom: '50%'}}>
                 <iframe
+                  title="google youtube"
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                   src={item.values.iFrame} frameBorder="0" allowFullScreen>
                 </iframe></div>
@@ -145,6 +169,13 @@ class AdminCardItem extends Component {
               type="text"
               multiLine={true}
               rows={2}
+              fullWidth={true}
+              component={renderTextField}
+            />
+            <Field
+              name="color"
+              label="Text Color"
+              type="text"
               fullWidth={true}
               component={renderTextField}
             />

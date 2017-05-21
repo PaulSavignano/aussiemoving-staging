@@ -11,7 +11,7 @@ import { fetchSignup } from '../actions/index'
 
 const validate = values => {
   const errors = {}
-  const requiredFields = [ 'firstname', 'lastname', 'email', 'password', 'passwordConfirm' ]
+  const requiredFields = [ 'firstName', 'lastName', 'email', 'password', 'passwordConfirm' ]
   requiredFields.forEach(field => {
     if (!values[ field ]) {
       errors[ field ] = 'Required'
@@ -39,11 +39,10 @@ class Signup extends Component {
   state = { open: false }
   handleClose = () => this.setState({open: false})
   componentWillReceiveProps(nextProps) {
-    if (nextProps.submitSucceeded) return this.setState({ open: true })
+    if (nextProps.submitSucceeded) this.setState({ open: true })
   }
   render() {
-    const { dispatch, error, values, handleSubmit, submitting, user } = this.props
-    console.log(this.props)
+    const { dispatch, error, handleSubmit, submitting, signup } = this.props
     return (
       <main>
         <section>
@@ -51,8 +50,8 @@ class Signup extends Component {
             <CardTitle title="Signup" subtitle="Enter your information" />
             <form onSubmit={handleSubmit(values => dispatch(fetchSignup({ values })))} >
               <CardText>
-                <Field name="firstname" component={renderTextField} label="First Name" fullWidth={true} />
-                <Field name="lastname" component={renderTextField} label="Last Name" fullWidth={true} />
+                <Field name="firstName" component={renderTextField} label="First Name" fullWidth={true} />
+                <Field name="lastName" component={renderTextField} label="Last Name" fullWidth={true} />
                 <Field name="email" component={renderTextField} label="Email" fullWidth={true} />
                 <Field name="password" component={renderTextField} label="Password" fullWidth={true} type="password" />
                 <Field name="passwordConfirm" component={renderTextField} label="Password Confirm" fullWidth={true} type="password"/>
@@ -71,7 +70,7 @@ class Signup extends Component {
                   open={this.state.open}
                   onRequestClose={this.handleClose}
                 >
-                  Welcome {values.firstname}!
+                  Welcome {signup.values ? signup.values.firstName : null}!
                 </Dialog>
               }
               <CardActions>
@@ -98,8 +97,7 @@ Signup = reduxForm({
 })(Signup)
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  firstname: state.form.signup.values.firstname
+  values: state.form.signup || {}
 })
 
 Signup = connect(mapStateToProps)(Signup)

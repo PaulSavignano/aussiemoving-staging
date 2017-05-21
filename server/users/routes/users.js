@@ -1,6 +1,7 @@
 import express from 'express'
 import { ObjectID } from 'mongodb'
 import crypto from 'crypto'
+import fetch from 'node-fetch'
 
 import User from '../models/User'
 import authenticate from '../../middleware/authenticate'
@@ -11,7 +12,7 @@ const users = express.Router()
 // Create
 users.post('/signup', (req, res) => {
   const { values } = req.body
-  if (!values.firstname || !values.email || !values.password) {
+  if (!values.firstName || !values.email || !values.password) {
     return res.status(422).send({ error: 'You must provide all fields' });
   }
   const user = new User({
@@ -25,7 +26,7 @@ users.post('/signup', (req, res) => {
           sendEmail1({
             to: doc.values.email,
             subject: `Welcome to ${process.env.APP_NAME}`,
-            name: doc.values.firstname,
+            name: doc.values.firstName,
             body: `<p>Welcome to ${process.env.APP_NAME}!</p>`
           })
           res.header('x-auth', token).send({
@@ -42,7 +43,6 @@ users.post('/signin', (req, res) => {
   const { email, password } = req.body
   User.findByCredentials(email, password)
     .then(user => {
-      console.log('inside signin', user)
       if (!user) return Promise.reject({ error: { password: 'Password does not match.'}})
       return user.generateAuthToken()
         .then(token => {
@@ -53,7 +53,10 @@ users.post('/signin', (req, res) => {
         })
         .catch(err => res.status(400).send(err))
     })
-    .catch(err => res.status(400).send(err))
+    .catch(err => {
+      console.log('myerror', err)
+      res.status(400).send(err)
+    })
 })
 
 users.post('/recovery', (req, res, next) => {
@@ -73,10 +76,10 @@ users.post('/recovery', (req, res, next) => {
           user.save()
             .then(() => {
               sendEmail1({
-                to: 'paul.savignano@gmail.com',
+                to: email,
                 subject: 'Reset Password',
-                name: 'Paul',
-                body: `<p>Click the link below to recover your password.<br />http://localhost:3000/reset/${token}</p>`
+                name: user.values.firstName,
+                body: `<p>Click the link below to recover your password.<br />${process.env.ROOT_URL}reset/${token}</p>`
               })
               res.send({ message: `A password recovery email has been sent to ${user.email}`})
             })
@@ -150,15 +153,54 @@ users.get('/', authenticate(['user','admin']), (req, res) => {
 
 
 // Contact
-users.post('/contact', (req, res) => {
-  const { firstname, email, message } = req.body
-  if (!firstname || !email || !message) {
-    return res.status(422).send({ error: 'You must provide all fields' });
-  }
+users.post('/request-estimate', (req, res) => {
+  const { values } = req.body
+  console.log(req.body)
+  var auth = 'Basic ' + new Buffer(process.env.MOVERBASE_KEY + ':').toString('base64')
+  return fetch(`https://api.moverbase.com/v1/leads/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: auth
+    },
+    body: JSON.stringify({
+     date: req.body.date,
+     firstName: req.body.firstName,
+     lastName: req.body.lastName,
+     phone: req.body.phone,
+     email: req.body.email,
+     from: { postalCode: req.body.from },
+     to: { postalCode: req.body.to },
+     size: { title: req.body.size },
+     note: req.body.note
+    })
+  })
+  .then(res => {
+    if (res.ok) return res.json()
+    throw new Error('Network response was not ok.')
+  })
+  .then(json => {
+    console.log(json)
+    res.send(json)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(400).send({ error: err })
+  })
+
+
+
+
+
+
+
+
+
+
   sendEmail1({
     to: 'paul.savignano@gmail.com',
     subject: 'Thank you for contacting us',
-    name: firstname,
+    name: firstName,
     body: `<p>Your message has been recieved and we will be contacting you shortly.</p>`
   })
     .then(info => {

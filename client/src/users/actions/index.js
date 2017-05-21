@@ -15,9 +15,9 @@ export const fetchSignup = (values) => {
     .then(res => {
       if (res.ok) {
         localStorage.setItem('token', res.headers.get('x-auth'))
-        return res.json()
+
       }
-      throw new Error('Network response was not ok.')
+      return res.json()
     })
     .then(json => {
       if (json.error) return Promise.reject(json.error)
@@ -26,6 +26,7 @@ export const fetchSignup = (values) => {
       if (path) return dispatch(push(path))
     })
     .catch(err => {
+      console.log(err)
       dispatch(fetchSignupFailure(err))
       throw new SubmissionError({ ...err, _error: 'Signup failed!' })
     })
@@ -267,5 +268,35 @@ export const fetchContact = (values) => {
         dispatch(fetchContactSuccess(json))
       })
       .catch(err => dispatch(fetchContactFailure(err)))
+  }
+}
+
+
+
+
+
+
+
+
+
+
+const fetchRequestEstimateSuccess = (values) => ({ type: 'CONTACT_USER', values })
+const fetchRequestEstimateFailure = (error) => ({ type: 'ERROR_USER', error })
+export const fetchRequestEstimate = (values) => {
+  return function(dispatch, getState) {
+    return fetch('/api/users/request-estimate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values)
+    })
+      .then(res => {
+        if (res.ok) return res.json()
+        throw new Error('Network response was not ok.')
+      })
+      .then(json => {
+        if (json.error) return Promise.reject(json.error)
+        dispatch(fetchRequestEstimateSuccess(json))
+      })
+      .catch(err => dispatch(fetchRequestEstimateFailure(err)))
   }
 }

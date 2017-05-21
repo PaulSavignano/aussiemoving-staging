@@ -11,7 +11,7 @@ import { fetchContact } from '../actions/index'
 
 const validate = values => {
   const errors = {}
-  const requiredFields = [ 'firstname', 'email', 'message' ]
+  const requiredFields = [ 'firstName', 'email', 'message' ]
   requiredFields.forEach(field => {
     if (!values[ field ]) {
       errors[ field ] = 'Required'
@@ -39,7 +39,7 @@ class Contact extends Component {
   }
   handleClose = () => this.setState({open: false})
   componentWillReceiveProps(nextProps) {
-    if (nextProps.submitSucceeded) return this.setState({ open: true })
+    if (nextProps.submitSucceeded) this.setState({ open: true })
   }
   render() {
     const { dispatch, error, handleSubmit, submitting } = this.props
@@ -50,7 +50,7 @@ class Contact extends Component {
             <CardTitle title="Contact" subtitle="Enter your information" />
             <form onSubmit={handleSubmit(values => dispatch(fetchContact(values)))} >
               <CardText>
-                <Field name="firstname" component={renderTextField} label="First Name" fullWidth={true} />
+                <Field name="firstName" component={renderTextField} label="First Name" fullWidth={true} />
                 <Field name="email" component={renderTextField} label="Email" fullWidth={true} />
                 <Field name="message" component={renderTextField} label="Message" fullWidth={true} multiLine={true} rows={2} />
               </CardText>

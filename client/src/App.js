@@ -21,10 +21,11 @@ const App = ({ search, children, theme }) => (
         transitionEnter={false}
         transitionLeave={false}
       >
-        <div style={{ display: 'flex', flexFlow: 'column', alignItems: 'stretch', height: '100%' }}>
+        <div>
           <Header />
-          <main>{search.length ? <SearchList /> : children}</main>
-          <div style={{ flex: '1 1 auto' }}></div>
+          <div style={{ paddingBottom: 100 }}>
+            {search.length ? <SearchList /> : children}
+          </div>
           <Footer />
         </div>
       </CSSTransitionGroup>
