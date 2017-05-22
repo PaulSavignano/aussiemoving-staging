@@ -51,7 +51,7 @@ class SectionItem extends Component {
           <div style={{
             margin,
             padding,
-            width
+            maxWidth: width
           }}>
             {title ? <h1 style={{ color, textAlign, fontFamily }}>{title}</h1> : null}
             {text ? <div style={{ color, fontFamily }}>{renderHTML(text)}</div> : null}
