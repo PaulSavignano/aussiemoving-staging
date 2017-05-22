@@ -7,7 +7,31 @@
   .appbar-nav {
     display: none !important;
   }
+  .favicon {
+    max-height: 150px !important;
+    max-width: 150px !important;
+  }
+  .phone {
+    height: 25px !important;
+    font-size: 20px !important;
+  }
 }
+
+
+.favicon {
+  position: absolute;
+  max-height: 200px;
+  max-width: 200px;
+}
+.phone {
+  height: 50px;
+  margin-top: -10px;
+  font-size: 30px;
+}
+
+
+
+
 
 html {
   height: 100%;

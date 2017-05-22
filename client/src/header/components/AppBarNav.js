@@ -58,11 +58,6 @@ class AppBarNav extends Component {
       },
       underlineStyle: {
         borderColor: 'rgb(0, 188, 212)'
-      },
-      favicon: {
-        position: 'absolute',
-        maxHeight: 200,
-        maxWidth: 200
       }
     }
 
@@ -94,11 +89,11 @@ class AppBarNav extends Component {
             :
           <nav style={styles.AppBarNav}>
             <div style={{ cursor: 'pointer', margin: '0 15px 0 0' }} onTouchTap={() => dispatch(push('/'))}>
-              {theme.image ? <img src={theme.image} style={styles.favicon} alt=""/> : 'Brand'}
+              {theme.image ? <img src={theme.image} className="favicon" alt=""/> : 'Brand'}
             </div>
 
             <span style={{ display: 'flex', flexFlow: 'column' }}>
-              <span style={{ alignSelf: 'flex-end', color: primary1Color, height: 50, marginTop: '-10px', fontSize: 30 }}>805.456.6498</span>
+              <span style={{ alignSelf: 'flex-end', color: primary1Color }} className="phone">805.456.6498</span>
               <span style={{ alignSelf: 'flex-end'}}>
                 <span className="appbar-nav">
                   {pages.filter(page => page.slug !== 'home').map(page => (
