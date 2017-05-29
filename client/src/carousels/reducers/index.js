@@ -2,9 +2,7 @@ import { type } from '../actions/index'
 
 const carousels = (state = {
   isFetching: true,
-  items: [{
-    values: null
-  }]
+  items: []
 }, action) => {
   switch (action.type) {
     case `REQUEST_${type}S`:

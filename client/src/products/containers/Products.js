@@ -1,15 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
+import muiThemeable from 'material-ui/styles/muiThemeable'
 
 import ProductList from '../components/ProductList'
 
-const Products = ({ isFetching, items }) => {
+const Products = ({ isFetching, items, muiTheme }) => {
   return (
     isFetching ? null :
-    <main>
-      <section><h1>Products</h1></section>
+    <section>
+      <h1 style={{ fontFamily: muiTheme.fontFamily, color: muiTheme.palette.textColor }}>Products</h1>
       <ProductList items={items} />
-    </main>
+    </section>
   )
 }
 
@@ -18,4 +20,4 @@ const mapStateToProps = (state, ownProps) => ({
   items: state.products.items
 })
 
-export default connect(mapStateToProps)(Products)
+export default compose(connect(mapStateToProps), muiThemeable())(Products)

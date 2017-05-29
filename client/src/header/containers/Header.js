@@ -1,43 +1,59 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import AppBar from 'material-ui/AppBar'
+import Drawer from 'material-ui/Drawer'
 
-import AppBarNav from '../components/AppBarNav'
-import DrawerNav from '../components/DrawerNav'
+import AppBarMenuAussie from '../components/AppBarMenuAussie'
+import DrawerMenu from '../components/DrawerMenu'
 
 class Header extends Component {
-  state = { open: false }
-  handleDrawer = () => this.setState({ open: !this.state.open })
+  state = {
+    open: false
+  }
+  handleToggle = () => this.setState({open: !this.state.open})
+  handleClose = () => this.setState({open: false})
   render() {
-    const { isFetching, pages, user, theme, path } = this.props
+    const { isFetching, brand, pages, user, path, hasProducts } = this.props
     return (
       isFetching ? null :
-      <div>
-        <AppBarNav
-          handleDrawer={this.handleDrawer}
-          user={user}
-          pages={pages}
-          theme={theme}
-          path={path}
+      <header>
+        <AppBar
+          onLeftIconButtonTouchTap={this.handleToggle}
+          titleStyle={{ height: 'auto'}}
+          title={
+            <AppBarMenuAussie
+              brand={brand}
+              pages={pages}
+              user={user}
+              path={path}
+              hasProducts={hasProducts}
+            />
+          }
         />
-        <DrawerNav
-          handleDrawer={this.handleDrawer}
-          open={this.state.open}
-          pages={pages}
-          user={user}
-          theme={theme}
-          path={path}
-        />
-      </div>
+        <Drawer docked={false} open={this.state.open} onRequestChange={(open) => this.setState({open}) }>
+          <DrawerMenu
+            brand={brand}
+            pages={pages}
+            user={user}
+            path={path}
+            handleClose={this.handleClose}
+          />
+        </Drawer>
+      </header>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  isFetching: state.pages.isFetching,
-  pages: state.pages.items || null,
-  path: state.routing.locationBeforeTransitions.pathname || null,
-  user: state.user || null,
-  theme: state.theme || null
-})
+const mapStateToProps = (state) => {
+  return {
+    isFetching: state.pages.isFetching,
+    pages: state.pages.items || null,
+    path: state.routing.locationBeforeTransitions.pathname || null,
+    user: state.user || null,
+    brand: state.brand || null,
+    hasProducts: state.products.items.length ? true : false
+  }
+
+}
 
 export default connect(mapStateToProps)(Header)

@@ -2,17 +2,17 @@ import React from 'react'
 
 import CardItem from './CardItem'
 
-const CardList = ({ isFetching, page, items }) => (
-!items.length ? null :
-  <section>
-    {items.map(item => (
+const CardList = ({ isFetching, section, cards }) => (
+!cards.length ? null :
+  <div style={{ display: 'flex', flexFlow: 'row wrap' }}>
+    {cards.map(card => (
       <CardItem
-        key={item._id}
-        item={item}
-        page={page}
+        key={card._id}
+        card={card}
+        section={section}
       />
     ))}
-  </section>
+  </div>
 )
 
 export default CardList

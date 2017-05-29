@@ -8,16 +8,16 @@ const imageSize = {
   width: 1920,
   height: 1080
 }
-const placeholdit = `https://placehold.it/${imageSize.width}x${imageSize.height}`
+const placeholdIt = `https://placehold.it/${imageSize.width}x${imageSize.height}`
 
 const AdminSections = ({ isFetching, page, items }) => {
   return (
     isFetching ? null :
-    <div style={{ margin: '0 20px 20px 20px' }}>
-      <AdminSectionList page={page} items={items} imageSize={imageSize} placeholdit={placeholdit} />
+    <section>
+      <AdminSectionList page={page} items={items} imageSize={imageSize} placeholdIt={placeholdIt} />
       <br/><br/><br/>
       <AdminSectionAdd page={page} />
-    </div>
+    </section>
   )
 }
 

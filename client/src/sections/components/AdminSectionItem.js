@@ -9,6 +9,7 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
 import AdminCards from '../../cards/containers/AdminCards'
+import AdminCarouselList from '../../carousels/containers/AdminCarouselList'
 import { fetchUpdate, fetchDelete } from '../actions/index'
 import ImageForm from '../../images/components/ImageForm'
 import RichTextMarkdown from '../../RichTextMarkdown'
@@ -59,7 +60,7 @@ class AdminSectionItem extends Component {
   componentWillMount() {
     const { image } = this.props.item || null
     const hasImage = image ? true : false
-    const imageUrl = image ? image : this.props.placeholdit
+    const imageUrl = image ? image : this.props.placeholdIt
     if (hasImage) {
       this.setState({ expanded: hasImage, image: imageUrl })
     }
@@ -74,16 +75,14 @@ class AdminSectionItem extends Component {
   }
   setEditorRef = (editor) => this.editor = editor
   render() {
-    const { error, handleSubmit, dispatch, page, item, imageSize, placeholdit } = this.props
-console.log(imageSize, placeholdit)
+    const { error, handleSubmit, dispatch, page, item, imageSize, placeholdIt } = this.props
     return (
       <Card
         expanded={this.state.expanded}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
         zDepth={3}
+        style={{ margin: '64px 0'}}
         containerStyle={{ display: 'flex', flexFlow: 'column', height: '100%' }}
-        style={{ height: '100%', margin: '130px 0'}}
+        className="cards"
       >
         <CardActions style={{ display: 'flex' }}>
           <RaisedButton
@@ -151,7 +150,7 @@ console.log(imageSize, placeholdit)
           <CardActions>
             <RaisedButton
               onTouchTap={() => {
-                const image = this.state.image || placeholdit
+                const image = this.state.image || placeholdIt
                 this.setState({ expanded: !this.state.expanded, submitted: false, image })
               }}
               type="button"
@@ -212,7 +211,7 @@ console.log(imageSize, placeholdit)
             </Field>
             <Field
               name="margin"
-              label="Text Area Margin (10px auto 20px auto"
+              label="Text Area Margin (10px auto 20px auto)"
               type="text"
               fullWidth={true}
               component={renderTextField}
@@ -220,13 +219,6 @@ console.log(imageSize, placeholdit)
             <Field
               name="padding"
               label="Text Area Padding (10px 5px 10px 5px)"
-              type="text"
-              fullWidth={true}
-              component={renderTextField}
-            />
-            <Field
-              name="textWidth"
-              label="Text Area Width px"
               type="text"
               fullWidth={true}
               component={renderTextField}
@@ -243,7 +235,7 @@ console.log(imageSize, placeholdit)
           <CardActions style={{ display: 'flex' }}>
             <RaisedButton
               type="submit"
-              label={this.state.submitted ? "Updated" : "Update"}
+              label={this.state.submitted ? "Section Updated" : "Update Section"}
               labelColor="#ffffff"
               primary={this.state.submitted ? false : true}
               backgroundColor={this.state.submitted ? "#4CAF50" : null }
@@ -252,6 +244,7 @@ console.log(imageSize, placeholdit)
           </CardActions>
         </form>
         <AdminCards page={page} section={item} />
+        <AdminCarouselList section={item} />
       </Card>
     )
   }

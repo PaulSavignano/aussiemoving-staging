@@ -11,29 +11,40 @@ import Footer from './footer/components/Footer'
 
 injectTapEventPlugin()
 
-const App = ({ search, children, theme }) => (
-  theme.isFetching ? null :
-    <MuiThemeProvider muiTheme={getMuiTheme(theme.values)}>
-      <CSSTransitionGroup
-        transitionName="image"
-        transitionAppear={true}
-        transitionAppearTimeout={900}
-        transitionEnter={false}
-        transitionLeave={false}
-      >
+const App = ({ search, children, brand }) => {
+  return (
+    brand.isFetching ? null : brand.values.palette ?
+      <MuiThemeProvider muiTheme={getMuiTheme(brand.values)}>
+        <CSSTransitionGroup
+          transitionName="image"
+          transitionAppear={true}
+          transitionAppearTimeout={900}
+          transitionEnter={false}
+          transitionLeave={false}
+        >
+          <Header />
+          <main>
+            {search.length ? <SearchList /> : children}
+          </main><br/><br/><br/><br/><br/>
+          <Footer />
+        </CSSTransitionGroup>
+      </MuiThemeProvider>
+
+      :
+
+      <MuiThemeProvider>
         <div>
           <Header />
-          <div style={{ paddingBottom: 100 }}>
+          <main>
             {search.length ? <SearchList /> : children}
-          </div>
+          </main>
           <Footer />
         </div>
-      </CSSTransitionGroup>
-    </MuiThemeProvider>
-)
+      </MuiThemeProvider>
+  )
+}
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return state
 }
 

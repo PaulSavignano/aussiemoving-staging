@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import TextField from 'material-ui/TextField'
-import { Card, CardHeader, CardActions, CardText } from 'material-ui/Card'
+import { Card, CardTitle, CardActions, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { fetchUpdate } from '../actions/index'
@@ -16,23 +16,14 @@ const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) 
   />
 )
 
-class AdminTheme extends Component {
+class AdminBrandForm extends Component {
   state = {
     zDepth: 1,
-    expanded: false,
     submitted: false,
-    editing: false,
-    image: null
-  }
-  componentWillMount() {
-    const { image } = this.props.theme || false
-    const hasImage = image ? true : false
-    const imageUrl = image ? image : 'https://placehold.it/280x60'
-    this.setState({ expanded: hasImage, image: imageUrl })
-    this.props.submitSucceeded ? this.setState({ submitted: true }) : this.setState({ submitted: false })
+    editing: false
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.submitSucceeded) this.setState({ submitted: true, image: nextProps.theme.image })
+    if (nextProps.submitSucceeded) this.setState({ submitted: true })
     if (nextProps.dirty) this.setState({ submitted: false })
   }
   editing = (bool) => {
@@ -42,17 +33,16 @@ class AdminTheme extends Component {
   handleMouseLeave = () => this.setState({ zDepth: 1 })
   setEditorRef = (editor) => this.editor = editor
   render() {
-    const { error, handleSubmit, dispatch, theme } = this.props
-    console.log('inside AdminTheme')
+    const { error, handleSubmit, dispatch, brand } = this.props
+    console.log('inside AdminBrandForm')
     return (
-      <section>
         <form
           onSubmit={handleSubmit((values) => {
             const update = {
               type: 'UPDATE_ITEM',
               values
             }
-            dispatch(fetchUpdate(theme._id, update))
+            dispatch(fetchUpdate(brand._id, update))
           })}
         >
           <Card
@@ -63,15 +53,32 @@ class AdminTheme extends Component {
             containerStyle={{ display: 'flex', flexFlow: 'column', height: '100%' }}
             style={{ height: '100%' }}
           >
-            <CardHeader
-              title="Edit Theme Styles"
-            />
-
+            <CardTitle title="Brand" />
             <CardText>
-              <Field name="appBarFontFamily" label="appBarFontFamily" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="name" label="Brand Name" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="phone" label="Phone" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="street" label="Street" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="city" label="City" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="state" label="State" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="zip" label="Zip" type="text" fullWidth={true} component={renderTextField} />
+            </CardText>
+            <CardTitle title="Social Media" />
+            <CardText>
+              <Field name="facebook" label="facebook" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="github" label="github" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="google" label="google" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="instagram" label="instagram" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="linkedin" label="linkedin" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="twitter" label="twitter" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="yelp" label="yelp" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="youtube" label="youtube" type="text" fullWidth={true} component={renderTextField} />
+            </CardText>
+            <CardTitle title="Theme" />
+            <CardText>
+              <Field name="fontFamily" label="fontFamily" type="text" fullWidth={true} component={renderTextField} />
+              <Field name="fontFamily2" label="fontFamily2" type="text" fullWidth={true} component={renderTextField} />
               <Field name="appBarColor" label="appBarColor" type="text" fullWidth={true} component={renderTextField} />
               <Field name="appBarTextColor" label="appBarTextColor" type="text" fullWidth={true} component={renderTextField} />
-              <Field name="fontFamily" label="fontFamily" type="text" fullWidth={true} component={renderTextField} />
               <Field name="primary1Color" label="primary1Color" type="text" fullWidth={true} component={renderTextField} />
               <Field name="primary2Color" label="primary2Color" type="text" fullWidth={true} component={renderTextField} />
               <Field name="primary3Color" label="primary3Color" type="text" fullWidth={true} component={renderTextField} />
@@ -100,15 +107,14 @@ class AdminTheme extends Component {
             </CardActions>
           </Card>
         </form>
-      </section>
     )
   }
 }
 
-AdminTheme = reduxForm({
-  form: 'adminTheme'
-})(AdminTheme)
+AdminBrandForm = reduxForm({
+  form: 'adminBrand'
+})(AdminBrandForm)
 
-AdminTheme = connect()(AdminTheme)
+AdminBrandForm = connect()(AdminBrandForm)
 
-export default AdminTheme
+export default AdminBrandForm

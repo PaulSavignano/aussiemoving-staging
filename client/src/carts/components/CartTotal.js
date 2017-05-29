@@ -8,7 +8,7 @@ import formatPrice from '../../modules/formatPrice'
 
 const CartTotal = ({ dispatch, total, user }) => (
   !total ? null :
-  <div style={{ margin: 20 }}>
+  <div style={{ margin: 24 }}>
     <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
       <span>subtotal</span>
       <h3>{formatPrice(total)}</h3>
@@ -19,8 +19,8 @@ const CartTotal = ({ dispatch, total, user }) => (
         label="Checkout"
         primary={true}
         onTouchTap={() => {
-          !user.values.email && dispatch(redirectUser('/order'))
-          dispatch(push('/order'))
+          !user.values.email && dispatch(redirectUser('/user/order'))
+          dispatch(push('/user/order'))
         }}
       />
     </div>

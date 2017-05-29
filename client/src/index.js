@@ -10,14 +10,14 @@ import './index.css'
 
 // Actions
 import { fetchCards } from './cards/actions/index'
-import { fetchCarousels } from './carousels/actions/index'
 import { fetchCart } from './carts/actions/index'
+import { fetchCarousels } from './carousels/actions/index'
 import { fetchSections } from './sections/actions/index'
 import { fetchOrders } from './orders/actions/index'
 import { fetchPages } from './pages/actions/index'
 import { fetchProducts } from './products/actions/index'
 import { fetchUser } from './users/actions/index'
-import { fetchTheme } from './theme/actions/index'
+import { fetchBrand } from './brand/actions/index'
 
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)
@@ -39,7 +39,7 @@ store.dispatch(fetchCarousels())
 store.dispatch(fetchSections())
 store.dispatch(fetchPages())
 store.dispatch(fetchProducts())
-store.dispatch(fetchTheme())
+store.dispatch(fetchBrand())
 
 
 ReactDOM.render(

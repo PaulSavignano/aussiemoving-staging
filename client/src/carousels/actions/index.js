@@ -42,6 +42,7 @@ const fetchCarouselsRequest = () => ({ type: REQUEST })
 const fetchCarouselsSuccess = (items) => ({ type: RECEIVE, items })
 const fetchCarouselsFailure = (error) => ({ type: ERROR, error })
 export const fetchCarousels = () => {
+        console.log('fetching Carousels')
   return (dispatch, getState) => {
     dispatch(fetchCarouselsRequest())
     return fetch(`/api/${route}`, {
@@ -50,15 +51,18 @@ export const fetchCarousels = () => {
         'Content-Type': 'application/json',
       }
     })
-      .then(res => res.json())
-      .then(json => {
-        if (json.error) return Promise.reject(json.error)
-        dispatch(fetchCarouselsSuccess(json))
-      })
-      .catch(err => {
-        console.log(err)
-        dispatch(fetchCarouselsFailure(err))
-      })
+    .then(res => {
+      if (res.ok) return res.json()
+      throw new Error('Network response was not ok.')
+    })
+    .then(json => {
+      if (json.error) return Promise.reject(json.error)
+      dispatch(fetchCarouselsSuccess(json))
+    })
+    .catch(err => {
+      dispatch(fetchCarouselsFailure(err))
+      throw new SubmissionError({ ...err, _error: 'Update failed!' })
+    })
   }
 }
 

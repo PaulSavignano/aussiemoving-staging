@@ -3,16 +3,15 @@ import bodyParser from 'body-parser'
 import path from 'path'
 
 import mongoose from './db/mongoose'
+import brands from './brands/routes/brands'
 import cards from './cards/routes/cards'
 import carousels from './carousels/routes/carousels'
 import carts from './carts/routes/carts'
-import sections from './sections/routes/sections'
 import orders from './orders/routes/orders'
 import pages from './pages/routes/pages'
 import products from './products/routes/products'
-import themes from './themes/routes/themes'
+import sections from './sections/routes/sections'
 import users from './users/routes/users'
-
 
 const app = express()
 const port = process.env.PORT
@@ -20,14 +19,14 @@ const port = process.env.PORT
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({ extended: false }))
 
+app.use('/api/brands', brands)
 app.use('/api/cards', cards)
 app.use('/api/carousels', carousels)
 app.use('/api/carts', carts)
-app.use('/api/sections', sections)
 app.use('/api/orders', orders)
 app.use('/api/pages', pages)
 app.use('/api/products', products)
-app.use('/api/themes', themes)
+app.use('/api/sections', sections)
 app.use('/api/users', users)
 
 

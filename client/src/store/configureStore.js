@@ -5,18 +5,18 @@ import { browserHistory } from 'react-router'
 import { reducer as formReducer } from 'redux-form'
 
 import cards from '../cards/reducers/index'
-import carousels from '../carousels/reducers/index'
 import cart from '../carts/reducers/index'
+import carousels from '../carousels/reducers/index'
 import sections from '../sections/reducers/index'
 import orders from '../orders/reducers/index'
 import pages from '../pages/reducers/index'
 import { searchProducts, products } from '../products/reducers/index'
 import { search } from '../header/reducers/search'
-import theme from '../theme/reducers/index'
+import brand from '../brand/reducers/index'
 import user from '../users/reducers/index'
 
-
 const rootReducer = combineReducers({
+  brand,
   cards,
   carousels,
   cart,
@@ -28,7 +28,6 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   search,
   searchProducts,
-  theme,
   user,
 })
 

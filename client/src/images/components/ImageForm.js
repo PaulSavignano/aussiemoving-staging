@@ -92,9 +92,11 @@ class ImageForm extends Component {
     e.preventDefault()
     const reader = new FileReader()
     const file = e.target.files[0]
-    reader.onload = (e) => this.editor.loadImage(e.target.result)
-    reader.readAsDataURL(file)
-    this.props.editing(true)
+    if (file) {
+      reader.onload = (e) => this.editor.loadImage(e.target.result)
+      reader.readAsDataURL(file)
+      this.props.editing(true)
+    }
   }
   handleEditing = () => {
     const { position, scale, opacity, rotate, borderRadius } = this.state
@@ -133,7 +135,7 @@ class ImageForm extends Component {
             label="Choose an Image"
             labelPosition="before"
             containerElement="label"
-            style={{ margin: '0 0 12px 0'}}
+            style={{ margin: '0 0 8px 0'}}
             fullWidth={true}
           >
             <input type="file" style={styles.imageInput} onChange={this.handleUpload} />

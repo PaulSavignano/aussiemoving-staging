@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose'
 
 const SectionSchema = new Schema({
-  pageId: { type: Schema.Types.ObjectId, required: true },
-  pageName: { type: String, required: true, trim: true },
+  pageId: { type: Schema.Types.ObjectId, ref: 'Page' },
+  pageName: { type: String },
   order: { type: Number },
   image: { type: String },
   values: {
@@ -12,10 +12,9 @@ const SectionSchema = new Schema({
     title: { type: String, trim: true },
     titleAlign: { type: String, trim: true },
     text: { type: String, trim: true },
+    textAlign: { type: String, trim: true },
     margin: { type: String, trim: true },
     padding: { type: String, trim: true },
-    textWidth: { type: String, trim: true },
-    textAlign: { type: String, trim: true },
     color: { type: String, trim: true }
   },
   createdAt: { type: Date, default: Date.now }

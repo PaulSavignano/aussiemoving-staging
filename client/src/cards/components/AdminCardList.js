@@ -2,20 +2,20 @@ import React from 'react'
 
 import AdminCardItem from '../components/AdminCardItem'
 
-const AdminCardList = ({ section, items, imageSize, placeholdit }) => (
-  items.length < 1 ? null  :
-  <section>
-    {items.map(item => (
+const AdminCardList = ({ section, cards, imageSize, placeholdIt }) => (
+  cards.length < 1 ? null  :
+  <div style={{ display: 'flex', flexFlow: 'row wrap', width: '100%' }}>
+    {cards.map(card => (
       <AdminCardItem
-        key={item._id}
-        item={item}
+        key={card._id}
+        card={card}
         section={section}
-        initialValues={item.values}
+        initialValues={card.values}
         imageSize={imageSize}
-        placeholdit={placeholdit}
+        placeholdIt={placeholdIt}
       />
     ))}
-  </section>
+  </div>
 )
 
 export default AdminCardList

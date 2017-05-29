@@ -1,6 +1,9 @@
 import { type } from '../actions/index'
 
-const theme = (state = {}, action) => {
+const brand = (state = {
+  isFetching: false,
+  values: {}
+}, action) => {
   switch (action.type) {
     case `REQUEST_${type}S`:
       return {
@@ -41,4 +44,4 @@ const theme = (state = {}, action) => {
   }
 }
 
-export default theme
+export default brand

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
-import { Card, CardActions } from 'material-ui/Card'
+import { Card, CardTitle, CardActions } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { fetchUpdate } from '../actions/index'
 import ImageFormHor from '../../images/components/ImageFormHor'
 
-class AdminTheme extends Component {
+class AdminBrandImage extends Component {
   state = {
     zDepth: 1,
     submitted: false,
@@ -15,14 +15,14 @@ class AdminTheme extends Component {
     image: null
   }
   componentWillMount() {
-    const { image } = this.props.theme || null
+    const { image } = this.props.brand || null
     const hasImage = image ? true : false
-    const imageUrl = hasImage ? image : this.props.placeholdit
+    const imageUrl = hasImage ? image : this.props.placeholdIt
     this.setState({ image: imageUrl })
     this.props.submitSucceeded ? this.setState({ submitted: true }) : this.setState({ submitted: false })
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.submitSucceeded) this.setState({ submitted: true, image: nextProps.theme.image })
+    if (nextProps.submitSucceeded) this.setState({ submitted: true, image: nextProps.brand.image })
     if (nextProps.dirty) this.setState({ submitted: false })
   }
   editing = (bool) => {
@@ -32,16 +32,15 @@ class AdminTheme extends Component {
     if (editor) this.editor = editor
   }
   render() {
-    const { error, handleSubmit, dispatch, theme, imageSize } = this.props
+    const { error, handleSubmit, dispatch, brand, imageSize } = this.props
     return (
-      <section>
         <form
           onSubmit={handleSubmit(() => {
-            const image = this.state.editing ? this.editor.handleSave() : theme.image
+            const image = this.state.editing ? this.editor.handleSave() : brand.image
             const type = 'UPDATE_IMAGE'
             const update = { type, image }
-            dispatch(fetchUpdate(theme._id, update))
-            this.setState({ image: theme.image })
+            dispatch(fetchUpdate(brand._id, update))
+            this.setState({ image: brand.image })
           })}
         >
           <Card
@@ -49,6 +48,7 @@ class AdminTheme extends Component {
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
           >
+            <CardTitle title="Brand Image" />
             <ImageFormHor
               image={this.state.image}
               type="image/png"
@@ -70,24 +70,23 @@ class AdminTheme extends Component {
             </CardActions>
           </Card>
         </form>
-      </section>
     )
   }
 }
 
-AdminTheme = reduxForm({
-  form: 'adminFavicon'
-})(AdminTheme)
+AdminBrandImage = reduxForm({
+  form: 'adminBrandImage'
+})(AdminBrandImage)
 
 const mapStateToProps = (state) => {
-  const isFetching = state.theme.isFetching
-  const theme = isFetching ? null : state.theme
+  const isFetching = state.brand.isFetching
+  const brand = isFetching ? null : state.brand
   return {
     isFetching,
-    theme
+    brand
   }
 }
 
-AdminTheme = connect(mapStateToProps)(AdminTheme)
+AdminBrandImage = connect(mapStateToProps)(AdminBrandImage)
 
-export default AdminTheme
+export default AdminBrandImage
