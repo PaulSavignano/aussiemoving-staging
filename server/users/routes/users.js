@@ -278,7 +278,6 @@ users.post('/contact', (req, res) => {
     `
   })
     .then(info => {
-      console.log(info)
       res.send({ message: 'Thank you for contacting us, we will respond to you shortly!'})
     })
     .catch(err => res.status(400).send(err))
@@ -330,7 +329,6 @@ users.post('/request-estimate', (req, res) => {
       `
     })
       .then(info => {
-        console.log('callback from email send', info)
         res.status(200).send()
       })
       .catch(err => {

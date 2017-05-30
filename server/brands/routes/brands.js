@@ -92,7 +92,6 @@ brands.patch('/:_id', authenticate(['admin']), (req, res) => {
           const update = { image: data.Location }
           Brand.findOneAndUpdate({ _id }, { $set: update }, { new: true })
             .then(doc => {
-              console.log('update image success', doc)
               res.send(doc)
             })
             .catch(err => {
@@ -109,7 +108,6 @@ brands.patch('/:_id', authenticate(['admin']), (req, res) => {
           const update = { image: null, values: newValues }
           Brand.findOneAndUpdate({ _id }, { $set: update }, { new: true })
             .then(doc => {
-              console.log(doc)
               res.send(doc)
             })
             .catch(err => {
@@ -123,7 +121,6 @@ brands.patch('/:_id', authenticate(['admin']), (req, res) => {
     case 'UPDATE_ITEM':
       Brand.findOneAndUpdate({ _id }, { $set: { values: newValues }}, { new: true })
         .then(doc => {
-          console.log(doc)
           res.send(doc)
         })
         .catch(err => {

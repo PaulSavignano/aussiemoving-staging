@@ -114,7 +114,6 @@ class AdminSectionItem extends Component {
               type = 'UPDATE_ITEM'
               image = null
             }
-            console.log(values)
             const update = { type, image, values }
             dispatch(fetchUpdate(item._id, update))
           })}

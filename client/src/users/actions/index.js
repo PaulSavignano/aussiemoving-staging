@@ -90,9 +90,7 @@ export const fetchUpdate = (update) => {
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json)
         if (json.error) return Promise.reject(json.error)
-        console.log(json)
         dispatch(fetchUpdateSuccess(json))
       })
       .catch(err => {
@@ -166,7 +164,6 @@ export const fetchSignin = (values) => {
         return res.json()
       })
       .then(json => {
-        console.log(json)
         if (json.error) return Promise.reject(json.error)
         dispatch(fetchSigninSuccess(json))
         dispatch(fetchOrders())
@@ -194,7 +191,6 @@ export const fetchSignout = () => {
       }
     })
       .then(res => {
-        console.log(res)
         if (res.ok) {
           localStorage.removeItem('token')
           dispatch(fetchSignoutSuccess())
