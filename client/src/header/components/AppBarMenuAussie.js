@@ -123,7 +123,6 @@ class AppBarMenuAussie extends Component {
                 }
                 <FlatButton
                   style={styles.user}
-                  className="appbar-nav"
                   onTouchTap={this.handleOpen}
                   label={user.values.firstName ? `Hello, ${user.values.firstName}`: `SIGN IN`}
                   hoverColor="none"
